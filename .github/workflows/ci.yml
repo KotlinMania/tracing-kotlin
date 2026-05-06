@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   pull_request:
-    branches: [main]
+    branches: [main, master]
 
 jobs:
   build-macos-arm64:
@@ -69,39 +69,19 @@ jobs:
           npm --version
           yarn --version
 
-      - name: Provision project-local Android SDK
-        run: ./setup-android-sdk.sh
-
-      - name: Build and test Linux and Android targets
+      - name: Build and test Linux, Android, JS, and WASM targets
         env:
           ORG_GRADLE_PROJECT_kotlin_js_yarn_download: "false"
         run: >
           ./gradlew
           compileAndroidMain
-          assembleAndroidHostTest
-          testAndroidHostTest
-          assembleAndroidDeviceTest
-          linuxX64Test
-          --no-configuration-cache
-
-      - name: Build and test JS Node and WASM Node targets
-        env:
-          ORG_GRADLE_PROJECT_kotlin_js_yarn_download: "false"
-        run: >
-          ./gradlew
-          jsNodeTest
-          wasmJsNodeTest
-          --max-workers=1
-          --no-configuration-cache
-
-      - name: Build and test browser targets
-        env:
-          ORG_GRADLE_PROJECT_kotlin_js_yarn_download: "false"
-        run: >
-          ./gradlew
+          assembleUnitTest
+          assembleAndroidTest
           jsBrowserTest
+          jsNodeTest
+          linuxX64Test
           wasmJsBrowserTest
-          --max-workers=1
+          wasmJsNodeTest
           --no-configuration-cache
 
   build-windows:
