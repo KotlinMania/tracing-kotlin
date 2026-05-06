@@ -16,10 +16,10 @@ This port targets functional parity with the upstream Rust crate while presentin
 
 ## Supported targets
 
-- macOS arm64 / x64
+- macOS arm64
 - Linux x64
 - Windows mingw-x64
-- iOS arm64 / x64 / simulator-arm64
+- iOS arm64 / simulator-arm64
 - JS (browser + Node.js)
 - Wasm-JS (browser + Node.js)
 - Android (API 24+)
