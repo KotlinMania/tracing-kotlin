@@ -57,7 +57,11 @@ kotlin {
         binaries.framework { baseName = "Tracing"; xcf.add(this) }
     }
     iosSimulatorArm64 {
-        binaries.framework { baseName = "Tracing"; xcf.add(this) }
+        binaries.framework {
+            baseName = "Tracing"
+            isStatic = true
+            xcf.add(this)
+        }
     }
     iosX64 {
         binaries.framework { baseName = "Tracing"; xcf.add(this) }
