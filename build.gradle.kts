@@ -911,6 +911,29 @@ tasks.register("hostTests") {
     )
 }
 
+tasks.matching { it.name.endsWith("GenerateSPMPackage") }.configureEach {
+    doLast {
+        val spmPackageDir =
+            layout.buildDirectory
+                .dir("SPMPackage")
+                .get()
+                .asFile
+        if (spmPackageDir.exists()) {
+            spmPackageDir.walkTopDown().filter { it.name == "Package.swift" }.forEach { packageSwift ->
+                val text = packageSwift.readText()
+                if (!text.contains("platforms:")) {
+                    packageSwift.writeText(
+                        text.replaceFirst(
+                            Regex("""(Package\(\s*name:\s*"[^"]*",)"""),
+                            "$1\n    platforms: [.macOS(.v14)],",
+                        ),
+                    )
+                }
+            }
+        }
+    }
+}
+
 // Swift Export smoke test — produces the SPM package via embedSwiftExportForXcode
 // (spawned with the Xcode-style env it requires) and runs `swift test` against it,
 // so Swift Export breakage surfaces locally, not only in the swift.yml CI job.
@@ -923,12 +946,19 @@ tasks.register("swiftExportSmokeTest") {
 
     doLast {
         val execOperations = serviceOf<ExecOperations>()
-        val swiftBuildDir =
+        val swiftBuildFile =
             layout.buildDirectory
                 .dir("swift-test")
                 .get()
                 .asFile
-                .absolutePath
+        swiftBuildFile.deleteRecursively()
+        swiftBuildFile.mkdirs()
+        val swiftBuildDir = swiftBuildFile.absolutePath
+        layout.buildDirectory
+            .dir("bin/macosArm64/SwiftExportBinaryDebugStatic")
+            .get()
+            .asFile
+            .mkdirs()
         execOperations
             .exec {
                 workingDir = projectDir
@@ -963,18 +993,18 @@ tasks.register("swiftExportSmokeTest") {
             if (!text.contains("platforms:")) {
                 generatedPackageSwift.writeText(
                     text.replaceFirst(
-                        Regex("(name:\\s*\"[^\"]*\",)"),
-                        "\$1\n    platforms: [.macOS(.v14)],",
+                        Regex("""(Package\(\s*name:\s*"[^"]*",)"""),
+                        "$1\n    platforms: [.macOS(.v14)],",
                     ),
                 )
             }
         }
 
-        execOperations
-            .exec {
-                workingDir = layout.projectDirectory.dir("swift-test-harness").asFile
-                commandLine("swift", "package", "reset")
-            }.assertNormalExitValue()
+        val harnessBuildDir =
+            layout.projectDirectory
+                .dir("swift-test-harness/.build")
+                .asFile
+        harnessBuildDir.deleteRecursively()
 
         execOperations
             .exec {
