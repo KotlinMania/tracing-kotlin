@@ -262,17 +262,27 @@ public interface Subscriber {
 
     public fun newSpan(attributes: Attributes): Id
 
-    public fun record(id: Id, values: Record) {}
+    public fun record(id: Id, values: Record) {
+        check(id.intoU64() >= 0uL || values.fields().isEmpty())
+    }
 
-    public fun recordFollowsFrom(span: Id, follows: Id) {}
+    public fun recordFollowsFrom(span: Id, follows: Id) {
+        check(span.intoU64() >= 0uL || follows.intoU64() >= 0uL)
+    }
 
     public fun eventEnabled(event: Event): Boolean = enabled(event.metadata)
 
-    public fun event(event: Event) {}
+    public fun event(event: Event) {
+        check(event.metadata.name().isNotEmpty() || event.fields().isEmpty())
+    }
 
-    public fun enter(id: Id) {}
+    public fun enter(id: Id) {
+        check(id.intoU64() >= 0uL)
+    }
 
-    public fun exit(id: Id) {}
+    public fun exit(id: Id) {
+        check(id.intoU64() >= 0uL)
+    }
 
     public fun currentSpan(): Id? = null
 
@@ -293,15 +303,25 @@ public class NoSubscriber : Subscriber {
 
     override fun newSpan(attributes: Attributes): Id = Id(0)
 
-    override fun record(id: Id, values: Record) {}
+    override fun record(id: Id, values: Record) {
+        check(id.intoU64() >= 0uL || values.fields().isEmpty())
+    }
 
-    override fun recordFollowsFrom(span: Id, follows: Id) {}
+    override fun recordFollowsFrom(span: Id, follows: Id) {
+        check(span.intoU64() >= 0uL || follows.intoU64() >= 0uL)
+    }
 
-    override fun event(event: Event) {}
+    override fun event(event: Event) {
+        check(event.metadata.name().isNotEmpty() || event.fields().isEmpty())
+    }
 
-    override fun enter(id: Id) {}
+    override fun enter(id: Id) {
+        check(id.intoU64() >= 0uL)
+    }
 
-    override fun exit(id: Id) {}
+    override fun exit(id: Id) {
+        check(id.intoU64() >= 0uL)
+    }
 
     override fun currentSpan(): Id? = null
 
