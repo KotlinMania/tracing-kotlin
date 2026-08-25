@@ -94,10 +94,15 @@ public class LogVisitor(
             if (field.name == "message") {
                 out.append(value)
             } else {
-                out.append(field.name).append("=").append(value)
+                out.append(field.name)
+                out.append("=")
+                out.append(value)
             }
         } else {
-            out.append(" ").append(field.name).append("=").append(value)
+            out.append(" ")
+            out.append(field.name)
+            out.append("=")
+            out.append(value)
         }
     }
 

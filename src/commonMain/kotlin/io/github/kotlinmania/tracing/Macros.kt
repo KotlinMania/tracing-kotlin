@@ -14,12 +14,13 @@ public fun enabled(metadata: Metadata): Boolean =
  */
 public fun enabled(level: Level, target: String = ""): Boolean {
     if (STATIC_MAX_LEVEL.contains(level)) {
-        val meta = Metadata(
-            name = "event",
-            target = target,
-            level = level,
-            kind = Kind.EVENT,
-        )
+        val meta =
+            Metadata(
+                name = "event",
+                target = target,
+                level = level,
+                kind = Kind.EVENT,
+            )
         return enabled(meta)
     }
     return false
@@ -71,13 +72,14 @@ public fun event(level: Level, message: String, vararg fields: Pair<String, Any?
         valueMap[k] = v
     }
     val fieldSet = FieldSet(fieldNames)
-    val meta = Metadata(
-        name = "event",
-        target = target,
-        level = level,
-        fields = fieldSet,
-        kind = Kind.EVENT,
-    )
+    val meta =
+        Metadata(
+            name = "event",
+            target = target,
+            level = level,
+            fields = fieldSet,
+            kind = Kind.EVENT,
+        )
     val vs = ValueSet(fieldSet, valueMap)
     val ev = Event(metadata = meta, isContextual = true, values = vs)
     getDefault { dispatch ->
@@ -94,13 +96,14 @@ public fun span(level: Level, name: String, vararg fields: Pair<String, Any?>, t
     val fieldNames = fields.map { it.first }
     val valueMap = fields.toMap()
     val fieldSet = FieldSet(fieldNames)
-    val meta = Metadata(
-        name = name,
-        target = target,
-        level = level,
-        fields = fieldSet,
-        kind = Kind.SPAN,
-    )
+    val meta =
+        Metadata(
+            name = name,
+            target = target,
+            level = level,
+            fields = fieldSet,
+            kind = Kind.SPAN,
+        )
     val vs = ValueSet(fieldSet, valueMap)
     return Span.new(meta, vs)
 }
