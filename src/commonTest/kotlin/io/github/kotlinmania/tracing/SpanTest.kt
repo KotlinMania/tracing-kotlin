@@ -3,7 +3,6 @@ package io.github.kotlinmania.tracing
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -20,13 +19,14 @@ class SpanTest {
         val subscriber = MockSubscriber()
         withDefault(subscriber) {
             val fieldSet = FieldSet(listOf("user_id", "message"))
-            val meta = Metadata(
-                name = "test_span",
-                target = "test",
-                level = Level.INFO,
-                fields = fieldSet,
-                kind = Kind.SPAN,
-            )
+            val meta =
+                Metadata(
+                    name = "test_span",
+                    target = "test",
+                    level = Level.INFO,
+                    fields = fieldSet,
+                    kind = Kind.SPAN,
+                )
 
             val span = Span.new(meta, ValueSet(fieldSet, mapOf("user_id" to 42L)))
             assertNotNull(span.id())
@@ -46,12 +46,13 @@ class SpanTest {
 
     @Test
     fun testDisabledSpan() {
-        val meta = Metadata(
-            name = "disabled_span",
-            target = "test",
-            level = Level.TRACE,
-            kind = Kind.SPAN,
-        )
+        val meta =
+            Metadata(
+                name = "disabled_span",
+                target = "test",
+                level = Level.TRACE,
+                kind = Kind.SPAN,
+            )
         val disabled = Span.disabled(meta)
         assertTrue(disabled.isDisabled())
         assertNull(disabled.id())

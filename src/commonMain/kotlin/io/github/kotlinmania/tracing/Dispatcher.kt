@@ -6,8 +6,9 @@ import kotlin.concurrent.Volatile
 /**
  * An error returned when attempting to set the global default subscriber more than once.
  */
-public class SetGlobalDefaultError(message: String = "a global default subscriber has already been set") :
-    Exception(message)
+public class SetGlobalDefaultError(
+    message: String = "a global default subscriber has already been set",
+) : Exception(message)
 
 /**
  * A cloneable, type-erased reference to a subscriber.
@@ -106,9 +107,10 @@ public fun hasBeenSet(): Boolean = globalDefault != null
  * Executes a closure with the currently active default Dispatch.
  */
 public fun <T> getDefault(f: (Dispatch) -> T): T {
-    val active = defaultDispatcherHolder.get()
-        ?: globalDefault
-        ?: Dispatch.none()
+    val active =
+        defaultDispatcherHolder.get()
+            ?: globalDefault
+            ?: Dispatch.none()
     return f(active)
 }
 

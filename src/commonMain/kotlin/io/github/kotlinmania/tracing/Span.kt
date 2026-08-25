@@ -244,13 +244,12 @@ public class Span(
         public fun root(meta: Metadata, values: ValueSet = ValueSet.empty()): Span =
             newRoot(meta, values)
 
-        public fun makeWith(meta: Metadata, newSpan: Attributes, dispatch: Dispatch): Span {
-            return if (dispatch.subscriber.enabled(meta)) {
+        public fun makeWith(meta: Metadata, newSpan: Attributes, dispatch: Dispatch): Span =
+            if (dispatch.subscriber.enabled(meta)) {
                 val id = dispatch.subscriber.newSpan(newSpan)
                 Span(Inner(id, dispatch), meta)
             } else {
                 newDisabled(meta)
             }
-        }
     }
 }
