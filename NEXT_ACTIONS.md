@@ -53,9 +53,9 @@ Every matched file is listed below with function and type symbol parity.
 ### 3. lib
 
 - **Target:** `tracing.Lib`
-- **Similarity:** 0.45
+- **Similarity:** 0.44
 - **Dependents:** 0
-- **Priority Score:** 1305.5
+- **Priority Score:** 1305.6
 - **Functions:** 9/9 matched (target 16)
 - **Missing functions:** _none_
 - **Types:** 4/4 matched (target 6)
