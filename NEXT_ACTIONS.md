@@ -60,7 +60,6 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 4/4 matched (target 6)
 - **Missing types:** _none_
-- **Lint issues:** 2
 
 ### 4. subscriber
 
