@@ -1,4 +1,4 @@
-// port-lint: source tracing/src/lib.rs
+// port-lint: source lib.rs
 package io.github.kotlinmania.tracing
 
 /**
@@ -34,9 +34,6 @@ public fun __disabledSpan(metadata: Metadata): Span = Span.disabled(metadata)
  * Internal helper to forward log events.
  */
 public fun __tracingLog(logger: Any?, logMeta: Any?, values: ValueSet) {
-    if (logger != null || logMeta != null) {
-        // preserve parameters
-    }
     val sb = StringBuilder()
     val visitor = LogVisitor(sb)
     values.record(visitor)
