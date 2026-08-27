@@ -1,4 +1,4 @@
-// port-lint: tests span.rs
+// port-lint: tests tracing/tests/span.rs
 package io.github.kotlinmania.tracing
 
 import kotlin.test.Test

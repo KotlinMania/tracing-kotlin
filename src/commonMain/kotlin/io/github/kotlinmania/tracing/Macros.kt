@@ -1,4 +1,4 @@
-// port-lint: source macros.rs
+// port-lint: source tracing/tests/macros.rs
 package io.github.kotlinmania.tracing
 
 /**
