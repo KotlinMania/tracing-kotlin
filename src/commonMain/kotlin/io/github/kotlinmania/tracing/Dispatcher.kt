@@ -1,4 +1,4 @@
-// port-lint: source tracing/src/dispatcher.rs
+// port-lint: source dispatcher.rs
 package io.github.kotlinmania.tracing
 
 import kotlin.concurrent.Volatile
