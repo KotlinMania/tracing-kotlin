@@ -4,10 +4,10 @@ Based on AST analysis, here are the concrete next steps.
 
 ## Summary
 
-- **Files Present:** 8/85 (9.4%)
-- **Function parity:** 56/411 matched (target 86) — 13.6%
-- **Class/type parity:** 13/175 matched (target 18) — 7.4%
-- **Combined symbol parity:** 69/586 matched (target 104) — 11.8%
+- **Files Present:** 8/8 (100.0%)
+- **Function parity:** 56/65 matched (target 86) — 86.2%
+- **Class/type parity:** 13/15 matched (target 18) — 86.7%
+- **Combined symbol parity:** 69/80 matched (target 104) — 86.2%
 - **Average inline-code cosine:** 0.40 (function body across 7 matched files)
 - **Average documentation cosine:** 0.52 (doc text across 7 matched files)
 - **Cheat-zeroed Files:** 1
@@ -27,20 +27,9 @@ No missing high-value files detected.
 
 Every matched file is listed below with function and type symbol parity.
 
-### 1. tracing.subscriber
+### 1. span
 
-- **Target:** `tracing.Subscriber`
-- **Similarity:** 0.84
-- **Dependents:** 2
-- **Priority Score:** 2000301.6
-- **Functions:** 3/3 matched
-- **Missing functions:** _none_
-- **Types:** 0/0 matched
-- **Missing types:** _none_
-
-### 2. tracing.span
-
-- **Target:** `tracing.Span`
+- **Target:** `tracing.Span [PROVENANCE-FALLBACK]`
 - **Similarity:** 0.41
 - **Dependents:** 1
 - **Priority Score:** 1074305.9
@@ -49,10 +38,15 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 6/7 matched
 - **Missing types:** `PhantomNotSend`
 - **Tests:** 1/1 matched
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tracing/src/span.rs` vs expected `span.rs`
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tests:tracing/src/span.rs` vs expected `span.rs`
+- **Proposed provenance header:** `// port-lint: source span.rs` (current: `// port-lint: source tracing/src/span.rs`)
+- **Proposed provenance header:** `// port-lint: tests span.rs` (current: `// port-lint: tests tracing/src/span.rs`)
+- **Lint issues:** 2
 
-### 3. tracing.instrument
+### 2. instrument
 
-- **Target:** `tracing.Instrument`
+- **Target:** `tracing.Instrument [PROVENANCE-FALLBACK]`
 - **Similarity:** 0.52
 - **Dependents:** 1
 - **Priority Score:** 1041804.8
@@ -60,10 +54,13 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** `span`, `inner`, `dispatcher`
 - **Types:** 2/3 matched (target 4)
 - **Missing types:** `Output`
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tracing/src/instrument.rs` vs expected `instrument.rs`
+- **Proposed provenance header:** `// port-lint: source instrument.rs` (current: `// port-lint: source tracing/src/instrument.rs`)
+- **Lint issues:** 1
 
-### 4. tracing.lib
+### 3. lib
 
-- **Target:** `tracing.Lib [STUB]`
+- **Target:** `tracing.Lib [STUB] [PROVENANCE-FALLBACK]`
 - **Similarity:** 0.00
 - **Dependents:** 0
 - **Priority Score:** 1310.0
@@ -71,10 +68,29 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 4/4 matched (target 6)
 - **Missing types:** _none_
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tracing/src/lib.rs` vs expected `lib.rs`
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tests:tracing/src/lib.rs` vs expected `lib.rs`
+- **Proposed provenance header:** `// port-lint: source lib.rs` (current: `// port-lint: source tracing/src/lib.rs`)
+- **Proposed provenance header:** `// port-lint: tests lib.rs` (current: `// port-lint: tests tracing/src/lib.rs`)
+- **Lint issues:** 2
 
-### 5. tracing.field
+### 4. subscriber
 
-- **Target:** `tracing.Field`
+- **Target:** `tracing.Subscriber [PROVENANCE-FALLBACK]`
+- **Similarity:** 0.84
+- **Dependents:** 0
+- **Priority Score:** 301.6
+- **Functions:** 3/3 matched
+- **Missing functions:** _none_
+- **Types:** 0/0 matched
+- **Missing types:** _none_
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tracing/src/subscriber.rs` vs expected `subscriber.rs`
+- **Proposed provenance header:** `// port-lint: source subscriber.rs` (current: `// port-lint: source tracing/src/subscriber.rs`)
+- **Lint issues:** 1
+
+### 5. field
+
+- **Target:** `tracing.Field [PROVENANCE-FALLBACK]`
 - **Similarity:** 0.60
 - **Dependents:** 0
 - **Priority Score:** 204.0
@@ -82,10 +98,13 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 1/1 matched
 - **Missing types:** _none_
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tracing/src/field.rs` vs expected `field.rs`
+- **Proposed provenance header:** `// port-lint: source field.rs` (current: `// port-lint: source tracing/src/field.rs`)
+- **Lint issues:** 1
 
-### 6. tracing.level_filters
+### 6. level_filters
 
-- **Target:** `tracing.LevelFilters`
+- **Target:** `tracing.LevelFilters [PROVENANCE-FALLBACK]`
 - **Similarity:** 0.41
 - **Dependents:** 0
 - **Priority Score:** 105.9
@@ -93,6 +112,9 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 0/0 matched
 - **Missing types:** _none_
+- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tracing/src/level_filters.rs` vs expected `level_filters.rs`
+- **Proposed provenance header:** `// port-lint: source level_filters.rs` (current: `// port-lint: source tracing/src/level_filters.rs`)
+- **Lint issues:** 1
 
 ## Success Criteria
 
@@ -114,6 +136,6 @@ do not treat them as the next implementation target by default.
 
 | Source | Target | Path |
 |--------|--------|------|
-| `tracing.macros` | `tracing.Macros` | `tracing/src/macros` |
-| `tracing.dispatcher` | `tracing.Dispatcher` | `tracing/src/dispatcher` |
+| `macros` | `tracing.Macros` | `macros` |
+| `dispatcher` | `tracing.Dispatcher` | `dispatcher` |
 
