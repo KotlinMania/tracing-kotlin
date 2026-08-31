@@ -1,4 +1,4 @@
-// port-lint: source instrument.rs
+// port-lint: source tracing/src/instrument.rs
 package io.github.kotlinmania.tracing
 
 /**
