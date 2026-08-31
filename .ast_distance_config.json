@@ -2,7 +2,7 @@
   "type": "port",
   "name": "tracing-kotlin",
   "source": {
-    "path": "tmp/tracing/src",
+    "path": "tmp",
     "lang": "rust"
   },
   "target": {
