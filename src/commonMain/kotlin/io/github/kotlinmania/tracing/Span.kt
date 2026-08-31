@@ -1,4 +1,4 @@
-// port-lint: source span.rs
+// port-lint: source tracing/src/span.rs
 package io.github.kotlinmania.tracing
 
 /**

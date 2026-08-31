@@ -4,13 +4,13 @@ Based on AST analysis, here are the concrete next steps.
 
 ## Summary
 
-- **Files Present:** 8/8 (100.0%)
-- **Function parity:** 56/65 matched (target 86) — 86.2%
-- **Class/type parity:** 13/15 matched (target 18) — 86.7%
-- **Combined symbol parity:** 69/80 matched (target 104) — 86.2%
-- **Average inline-code cosine:** 0.40 (function body across 8 matched files)
-- **Average documentation cosine:** 0.49 (doc text across 8 matched files)
-- **Cheat-zeroed Files:** 0
+- **Files Present:** 8/85 (9.4%)
+- **Function parity:** 56/411 matched (target 86) — 13.6%
+- **Class/type parity:** 13/175 matched (target 18) — 7.4%
+- **Combined symbol parity:** 69/586 matched (target 104) — 11.8%
+- **Average inline-code cosine:** 0.40 (function body across 7 matched files)
+- **Average documentation cosine:** 0.52 (doc text across 7 matched files)
+- **Cheat-zeroed Files:** 1
 - **Critical Issues:** 6 files with <0.60 function similarity
 
 ## Priority 1: Fix Incomplete High-Dependency Files
@@ -27,7 +27,18 @@ No missing high-value files detected.
 
 Every matched file is listed below with function and type symbol parity.
 
-### 1. span
+### 1. tracing.subscriber
+
+- **Target:** `tracing.Subscriber`
+- **Similarity:** 0.84
+- **Dependents:** 2
+- **Priority Score:** 2000301.6
+- **Functions:** 3/3 matched
+- **Missing functions:** _none_
+- **Types:** 0/0 matched
+- **Missing types:** _none_
+
+### 2. tracing.span
 
 - **Target:** `tracing.Span`
 - **Similarity:** 0.41
@@ -39,7 +50,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing types:** `PhantomNotSend`
 - **Tests:** 1/1 matched
 
-### 2. instrument
+### 3. tracing.instrument
 
 - **Target:** `tracing.Instrument`
 - **Similarity:** 0.52
@@ -50,29 +61,18 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 2/3 matched (target 4)
 - **Missing types:** `Output`
 
-### 3. lib
+### 4. tracing.lib
 
-- **Target:** `tracing.Lib`
-- **Similarity:** 0.44
+- **Target:** `tracing.Lib [STUB]`
+- **Similarity:** 0.00
 - **Dependents:** 0
-- **Priority Score:** 1305.6
+- **Priority Score:** 1310.0
 - **Functions:** 9/9 matched (target 16)
 - **Missing functions:** _none_
 - **Types:** 4/4 matched (target 6)
 - **Missing types:** _none_
 
-### 4. subscriber
-
-- **Target:** `tracing.Subscriber`
-- **Similarity:** 0.84
-- **Dependents:** 0
-- **Priority Score:** 301.6
-- **Functions:** 3/3 matched
-- **Missing functions:** _none_
-- **Types:** 0/0 matched
-- **Missing types:** _none_
-
-### 5. field
+### 5. tracing.field
 
 - **Target:** `tracing.Field`
 - **Similarity:** 0.60
@@ -83,7 +83,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 1/1 matched
 - **Missing types:** _none_
 
-### 6. level_filters
+### 6. tracing.level_filters
 
 - **Target:** `tracing.LevelFilters`
 - **Similarity:** 0.41
@@ -114,6 +114,6 @@ do not treat them as the next implementation target by default.
 
 | Source | Target | Path |
 |--------|--------|------|
-| `macros` | `tracing.Macros` | `macros` |
-| `dispatcher` | `tracing.Dispatcher` | `dispatcher` |
+| `tracing.macros` | `tracing.Macros` | `tracing/src/macros` |
+| `tracing.dispatcher` | `tracing.Dispatcher` | `tracing/src/dispatcher` |
 
