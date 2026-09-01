@@ -1,4 +1,4 @@
-// port-lint: source tracing/src/level_filters.rs
+// port-lint: source level_filters.rs
 package io.github.kotlinmania.tracing
 
 /**
