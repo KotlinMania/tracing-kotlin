@@ -27,6 +27,40 @@ public fun enabled(level: Level, target: String = ""): Boolean {
 }
 
 /**
+ * Checks if the given event level and target are enabled by the current subscriber.
+ */
+public fun eventEnabled(level: Level, target: String = ""): Boolean {
+    if (STATIC_MAX_LEVEL.contains(level)) {
+        val meta =
+            Metadata(
+                name = "event",
+                target = target,
+                level = level,
+                kind = Kind.EVENT,
+            )
+        return enabled(meta)
+    }
+    return false
+}
+
+/**
+ * Checks if the given span level and target are enabled by the current subscriber.
+ */
+public fun spanEnabled(level: Level, target: String = ""): Boolean {
+    if (STATIC_MAX_LEVEL.contains(level)) {
+        val meta =
+            Metadata(
+                name = "span",
+                target = target,
+                level = level,
+                kind = Kind.SPAN,
+            )
+        return enabled(meta)
+    }
+    return false
+}
+
+/**
  * Emits a trace-level event.
  */
 public fun trace(message: String, vararg fields: Pair<String, Any?>) {
