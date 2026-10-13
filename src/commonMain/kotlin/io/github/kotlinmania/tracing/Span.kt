@@ -70,6 +70,16 @@ public data class Target(
 )
 
 /**
+ * Log target for all span lifecycle (creation/enter/exit/close) records.
+ */
+public const val LIFECYCLE_LOG_TARGET: String = "tracing::span"
+
+/**
+ * Log target for span activity (enter/exit) records.
+ */
+public const val ACTIVITY_LOG_TARGET: String = "tracing::span::active"
+
+/**
  * A handle to a span of execution.
  */
 public class Span(
