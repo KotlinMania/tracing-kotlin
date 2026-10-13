@@ -1,6 +1,8 @@
 package io.github.kotlinmania.tracing
 
-public class MockSubscriber : Subscriber {
+public class MockSubscriber(
+    public var filter: ((Metadata) -> Boolean)? = null,
+) : Subscriber {
     public val events: MutableList<Event> = mutableListOf()
     public val spans: MutableList<Attributes> = mutableListOf()
     public val records: MutableList<Pair<Id, Record>> = mutableListOf()
@@ -10,9 +12,14 @@ public class MockSubscriber : Subscriber {
     private var nextId: Long = 1
     private var current: Id? = null
 
+    public fun withFilter(filter: (Metadata) -> Boolean): MockSubscriber {
+        this.filter = filter
+        return this
+    }
+
     override fun registerCallsite(metadata: Metadata): Interest = Interest.ALWAYS
 
-    override fun enabled(metadata: Metadata): Boolean = true
+    override fun enabled(metadata: Metadata): Boolean = filter?.invoke(metadata) ?: true
 
     override fun newSpan(attributes: Attributes): Id {
         spans.add(attributes)
