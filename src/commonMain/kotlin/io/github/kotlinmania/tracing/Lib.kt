@@ -1,6 +1,11 @@
 // port-lint: source lib.rs
 package io.github.kotlinmania.tracing
 
+import io.github.kotlinmania.log.Arguments
+import io.github.kotlinmania.log.Log
+import io.github.kotlinmania.log.Metadata as LogMetadata
+import io.github.kotlinmania.log.Record as LogRecord
+
 /**
  * Top-level tracing namespace module.
  */
@@ -16,7 +21,7 @@ public interface Sealed
 /**
  * Internal macro support helpers.
  */
-public fun __isEnabled(metadata: Metadata, interest: Interest): Boolean =
+public fun isEnabled(metadata: Metadata, interest: Interest): Boolean =
     if (interest.isNever()) {
         false
     } else {
@@ -28,18 +33,42 @@ public fun __isEnabled(metadata: Metadata, interest: Interest): Boolean =
 /**
  * Internal helper to construct a disabled span.
  */
-public fun __disabledSpan(metadata: Metadata): Span = Span.disabled(metadata)
+public fun disabledSpan(metadata: Metadata): Span = Span.disabled(metadata)
 
 /**
- * Internal helper to forward log events.
+ * Internal helper to forward log events using the log-kotlin facade.
  */
-public fun __tracingLog(logger: Any?, logMeta: Any?, values: ValueSet) {
-    if (logger == null && logMeta == null) {
-        // no-op check
+public fun tracingLog(
+    meta: Metadata,
+    logger: Log,
+    logMeta: LogMetadata,
+    values: ValueSet,
+) {
+    val logValues = LogValueSet(values, isFirst = true)
+    val record =
+        LogRecord
+            .builder()
+            .file(meta.file)
+            .modulePath(meta.modulePath)
+            .line(meta.line)
+            .metadata(logMeta)
+            .args(Arguments(logValues.toString(), emptyList()))
+            .build()
+    logger.log(record)
+}
+
+/**
+ * Backwards-compatible overload for forwarding log events.
+ */
+public fun tracingLog(logger: Any?, logMeta: Any?, values: ValueSet) {
+    if (logger is Log && logMeta is LogMetadata) {
+        val meta = Metadata(name = "log", target = logMeta.target(), level = Level.INFO)
+        tracingLog(meta, logger, logMeta, values)
+    } else {
+        val sb = StringBuilder()
+        val visitor = LogVisitor(sb)
+        values.record(visitor)
     }
-    val sb = StringBuilder()
-    val visitor = LogVisitor(sb)
-    values.record(visitor)
 }
 
 /**

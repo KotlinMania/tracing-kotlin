@@ -22,11 +22,11 @@ class InstrumentTest {
             val value = "hello-tracing"
             val instrumented = value.instrument(span)
 
-            assertEquals(value, instrumented.inner())
+            assertEquals(value, instrumented.inner)
             assertEquals(value, instrumented.innerMut())
             assertEquals(value, instrumented.innerPinRef())
             assertEquals(value, instrumented.innerPinMut())
-            assertSame(span, instrumented.span())
+            assertSame(span, instrumented.span)
             assertSame(span, instrumented.spanMut())
             assertEquals(Pair(span, value), instrumented.spanAndInnerPinRef())
             assertEquals(Pair(span, value), instrumented.spanAndInnerPinMut())
@@ -61,8 +61,8 @@ class InstrumentTest {
             span.inScope {
                 val num = 123
                 val instrumented = num.inCurrentSpan()
-                assertEquals(span.id(), instrumented.span().id())
-                assertEquals(123, instrumented.inner())
+                assertEquals(span.id(), instrumented.span.id())
+                assertEquals(123, instrumented.inner)
             }
         }
     }
@@ -73,12 +73,12 @@ class InstrumentTest {
         val data = 42
         val withDispatch = data.withSubscriber(subscriber)
 
-        assertEquals(data, withDispatch.inner())
+        assertEquals(data, withDispatch.inner)
         assertEquals(data, withDispatch.innerMut())
         assertEquals(data, withDispatch.innerPinRef())
         assertEquals(data, withDispatch.innerPinMut())
         assertEquals(data, withDispatch.poll())
-        assertNotNull(withDispatch.dispatcher())
+        assertNotNull(withDispatch.dispatcher)
 
         val result =
             withDispatch.run { v ->
@@ -94,7 +94,7 @@ class InstrumentTest {
         withDefault(subscriber) {
             val str = "test-string"
             val withDispatch = str.withCurrentSubscriber()
-            assertEquals("test-string", withDispatch.inner())
+            assertEquals("test-string", withDispatch.inner)
             val res = withDispatch.run { it.uppercase() }
             assertEquals("TEST-STRING", res)
         }

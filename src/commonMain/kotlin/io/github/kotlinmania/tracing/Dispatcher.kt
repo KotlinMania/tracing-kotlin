@@ -90,18 +90,23 @@ public fun setDefault(dispatch: Dispatch): DefaultGuard {
 /**
  * Sets the global default subscriber.
  */
-public fun setGlobalDefault(dispatch: Dispatch): Result<Unit> =
-    if (globalDefault != null) {
+public fun setGlobalDefault(dispatch: Dispatch): Result<Unit> {
+    val current = globalDefault
+    return if (current != null) {
         Result.failure(SetGlobalDefaultError())
     } else {
         globalDefault = dispatch
         Result.success(Unit)
     }
+}
 
 /**
  * Returns whether a global default subscriber has been set.
  */
-public fun hasBeenSet(): Boolean = globalDefault != null
+public fun hasBeenSet(): Boolean {
+    val current = globalDefault
+    return current != null
+}
 
 /**
  * Executes a closure with the currently active default Dispatch.

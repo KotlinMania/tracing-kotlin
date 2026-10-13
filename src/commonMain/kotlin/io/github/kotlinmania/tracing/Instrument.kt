@@ -38,11 +38,7 @@ public class Instrumented<T>(
     public var inner: T,
     public var span: Span,
 ) {
-    public fun span(): Span = span
-
     public fun spanMut(): Span = span
-
-    public fun inner(): T = inner
 
     public fun innerMut(): T = inner
 
@@ -71,10 +67,6 @@ public class WithDispatch<T>(
     public var inner: T,
     public val dispatcher: Dispatch,
 ) {
-    public fun dispatcher(): Dispatch = dispatcher
-
-    public fun inner(): T = inner
-
     public fun innerMut(): T = inner
 
     public fun innerPinRef(): T = inner

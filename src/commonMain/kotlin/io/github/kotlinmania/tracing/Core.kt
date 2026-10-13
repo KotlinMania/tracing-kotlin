@@ -217,6 +217,7 @@ public data class Metadata(
     public val kind: Kind = Kind.EVENT,
     public val file: String? = null,
     public val line: Int? = null,
+    public val modulePath: String? = null,
     public val callsite: Callsite? = null,
 ) {
     public val isSpan: Boolean get() = kind.isSpan()
